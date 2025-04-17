@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.sena.school_library.DTO.requestRegisterUser;
+import com.sena.school_library.DTO.responseDTO;
 import com.sena.school_library.interfaces.IUser;
 import com.sena.school_library.model.User;
 
@@ -21,6 +23,10 @@ public class UserServices {
 
     public List<User> findAllUsers(){
         return UserData.findAll();
+    }
+
+    public List<User> filterFormName(String filter){
+        return UserData.filterFormName(filter);
     }
 
     public Optional<User>findByIdUser(int id){
@@ -56,10 +62,18 @@ public class UserServices {
         }
     }
 
-    public void delete(int id){
+    public responseDTO delete(int id){
         var User = findByIdUser(id);
+        responseDTO response = new responseDTO();
         if(User.isPresent()){
             UserData.delete(User.get());
+            response.setStatus(HttpStatus.OK);
+            response.setMessage("se elimino correctamente");
+            return response;
+        }else{
+            response.setStatus(HttpStatus.NOT_FOUND);
+            response.setMessage("El registro no existe");
+            return response ;
         }
     }
 }

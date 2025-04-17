@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.school_library.DTO.requestRegisterUser;
+import com.sena.school_library.DTO.responseDTO;
 import com.sena.school_library.service.UserServices;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class UserController {
         return new ResponseEntity<Object>(ListUser,HttpStatus.OK);
     }
 
+    @GetMapping("/filter/{name}")
+    public ResponseEntity<Object> filterFormName(@PathVariable String name){
+        var ListUser = UserService.filterFormName(name);
+        return new ResponseEntity<Object>(ListUser,HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Object> findByIdEntity(@PathVariable int id){
         var User = UserService.findByIdUser(id);
@@ -45,8 +52,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteUser(@PathVariable int id){
-        UserService.delete(id);
-        return new ResponseEntity<>("Delete ok", HttpStatus.OK);
+        responseDTO response = UserService.delete(id);
+        return new ResponseEntity<>(response,response.getStatus());
     }
      
     @PostMapping("/")
