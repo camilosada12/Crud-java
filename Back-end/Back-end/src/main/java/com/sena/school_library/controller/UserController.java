@@ -10,15 +10,13 @@ import com.sena.school_library.service.UserServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("api/v1/User")
 public class UserController {
     /*
      * Get: Obtener datos o constutar
@@ -42,22 +40,10 @@ public class UserController {
         var User = UserService.findByIdUser(id);
         return new ResponseEntity<>(User, HttpStatus.OK);
     }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable int id){
-        UserService.delete(id);
-        return new ResponseEntity<>("Delete ok", HttpStatus.OK);
-    }
      
     @PostMapping("/")
     public String postMethodName(@RequestBody requestRegisterUser user){
         UserService.save(user);
        return "Register Ok";
-    }
-
-    @PutMapping("/")
-    public String update (@RequestBody requestRegisterUser user){
-        UserService.update(user);
-        return "actualizo ok";
     }
 }

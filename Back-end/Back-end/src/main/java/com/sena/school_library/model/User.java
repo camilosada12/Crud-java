@@ -1,19 +1,18 @@
 package com.sena.school_library.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 /*
  * anotacion bean, indica que es una entidad
  */
 
-@Entity(name = "user_person")
+@Entity(name = "User")
 public class User {
 
     //Id= PK
@@ -42,19 +41,15 @@ public class User {
     @Column(name= "Rol")
     private String Rol;
 
-    
+    @OneToMany
+    @JoinColumn(name= "Books", referencedColumnName = "Id_Books")
+    private Books Books;
 
-   public User() {
-    }
+    @OneToMany
+    @JoinColumn(name= "UserRoles", referencedColumnName = "Id_UserRole")
+    private UserRole UserRoles;
 
-    // Constructor que no incluye colecciones
     public User(int id_User, String name, String lastName, String user, String password, String mail, String rol) {
-        this(id_User, name, lastName, user, password, mail, rol, null, null);  
-    }
-
-// Constructor completo si lo necesitas
-    public User(int id_User, String name, String lastName, String user, String password, String mail, String rol, 
-                List<Books> books, List<UserRole> userRoles) {
         Id_User = id_User;
         Name = name;
         LastName = lastName;
@@ -62,16 +57,7 @@ public class User {
         this.password = password;
         Mail = mail;
         Rol = rol;
-        this.books = books;
-        this.userRoles = userRoles;
     }
-
-    @OneToMany(mappedBy = "user") 
-    private List<Books> books;
-
-    // Por esto:
-    @OneToMany(mappedBy = "user")
-    private List<UserRole> userRoles;
 
     public int getId_User() {
         return Id_User;
@@ -128,22 +114,4 @@ public class User {
     public void setRol(String rol) {
         Rol = rol;
     }
-
-    public List<Books> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Books> books) {
-        this.books = books;
-    }
-
-    public List<UserRole> getUserRoles() {
-        return userRoles;
-    }
-
-    public void setUserRoles(List<UserRole> userRoles) {
-        this.userRoles = userRoles;
-    }
-
-   
 }

@@ -32,27 +32,26 @@ public class UserServices {
     }
 
     public User converRegisterToUser(requestRegisterUser user){
-            return new User(  // Correcto: User con U mayúscula
-        0,
-        user.getName(),
-        user.getLastname(),
-        user.getUser(),
-        user.getPassword(),
-        user.getMail(),
-        user.getRol()
-    );
+        return new User(
+            0,
+            user.getName(),
+            user.getLastName(),
+            user.getUser(),
+            user.getPassword(),
+            user.getMail(),
+            user.getRol()
+        );
     }
 
-    public void update(requestRegisterUser UserUpdate){
-        var User = findByIdUser(UserUpdate.getId_user());
+    public void update(int id, User UserUpdate){
+        var User = findByIdUser(id);
         if(User.isPresent()){
             User.get().setName(UserUpdate.getName());
-            User.get().setLastName(UserUpdate.getLastname());
+            User.get().setLastName(UserUpdate.getLastName());
             User.get().setUser(UserUpdate.getUser());
             User.get().setPassword(UserUpdate.getPassword());
             User.get().setMail(UserUpdate.getMail());
             User.get().setRol(UserUpdate.getRol());
-            UserData.save(User.get());
         }
     }
 

@@ -10,7 +10,7 @@ import jakarta.persistence.ManyToOne;
 
 @Entity(name = "UserRole")
 public class UserRole {
-    //Id= PK
+//Id= PK
     @Id
     //El valor sea autoGenerado e autoIncrementar
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,20 +21,16 @@ public class UserRole {
     //Referencia a otras clases
     @ManyToOne
     @JoinColumn(name= "User", referencedColumnName = "Id_User")
-    private User user;
+    private User User;
 
     @ManyToOne
     @JoinColumn(name= "Role",referencedColumnName = "Id_Rol")
-    private Rol rol;
-    
-    // Constructor vacío requerido por JPA
-    public UserRole() {
-    }
+    private Rol Rol;
 
     public UserRole(int id_UserRole, com.sena.school_library.model.User user, com.sena.school_library.model.Rol rol) {
         Id_UserRole = id_UserRole;
-        this.user = user;
-        this.rol = rol;
+        User = user;
+        Rol = rol;
     }
 
     public int getId_UserRole() {
@@ -46,18 +42,21 @@ public class UserRole {
     }
 
     public User getUser() {
-        return user;
+        return User;
     }
 
     public void setUser(User user) {
-        this.user = user;
+        User = user;
     }
 
     public Rol getRol() {
-        return rol;
+        return Rol;
     }
 
     public void setRol(Rol rol) {
-        this.rol = rol;
+        Rol = rol;
     }
+
+
+    
 }

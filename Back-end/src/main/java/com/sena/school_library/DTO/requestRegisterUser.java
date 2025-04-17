@@ -2,68 +2,84 @@ package com.sena.school_library.DTO;
 
 public class requestRegisterUser {
 
-    private int Id_User;
-    private String Name;
-    private String LastName;
-    private String User;
-    private String Mail;
+    private int id_user;
+    private String name;
+    private String lastname;
+    private String user;
+    private String mail;
     private String password;
-    private String Rol;
+    private String rol;
+
     public requestRegisterUser(){
     }
 
-    public requestRegisterUser(int id_User, String name, String lastName, String user, String mail, String password,
+    public requestRegisterUser(int id_user, String name, String lastname, String user, String mail, String password,
             String rol) {
-        Id_User = id_User;
-        Name = name;
-        LastName = lastName;
-        User = user;
-        Mail = mail;
+        this.id_user = id_user;
+        this.name = name;
+        this.lastname = lastname;
+        this.user = user;
+        this.mail = mail;
         this.password = password;
-        Rol = rol;
+        this.rol = rol;
     }
-    public int getId_User() {
-        return Id_User;
+
+    public int getId_user() {
+        return id_user;
     }
-    public void setId_User(int id_User) {
-        Id_User = id_User;
+
+    public void setId_user(int id_user) {
+        this.id_user = id_user;
     }
+
     public String getName() {
-        return Name;
+        return name;
     }
+
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
-    public String getLastName() {
-        return LastName;
+
+    public String getLastname() {
+        return lastname;
     }
-    public void setLastName(String lastName) {
-        LastName = lastName;
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
+
     public String getUser() {
-        return User;
+        return user;
     }
+
     public void setUser(String user) {
-        User = user;
+        this.user = user;
     }
+
     public String getMail() {
-        return Mail;
+        return mail;
     }
+
     public void setMail(String mail) {
-        Mail = mail;
+        this.mail = mail;
     }
+
     public String getPassword() {
         return password;
     }
+
     public void setPassword(String password) {
         this.password = password;
     }
+
     public String getRol() {
-        return Rol;
+        return rol;
     }
+
     public void setRol(String rol) {
-        Rol = rol;
+        this.rol = rol;
     }
-   
+    
+    
     
 }

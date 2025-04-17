@@ -5,8 +5,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 
 @Entity(name = "Books")
 public class Books {
@@ -16,10 +14,6 @@ public class Books {
     //@colum indica que el valor es una columna en la base de datos 
     @Column(name= "Id_Books", length = 10)
     private int Id_Books ;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id") 
-    private User user;
 
     @Column(name= "Book", length = 100)
     private int Book;
