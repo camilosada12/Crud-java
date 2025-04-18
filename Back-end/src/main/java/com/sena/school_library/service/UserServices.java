@@ -38,14 +38,15 @@ public class UserServices {
     }
 
     public User converRegisterToUser(requestRegisterUser user){
-            return new User(  // Correcto: User con U mayúscula
+            return new User(
         0,
         user.getName(),
         user.getLastname(),
         user.getUser(),
         user.getPassword(),
         user.getMail(),
-        user.getRol()
+        null,
+        null
     );
     }
 
@@ -57,7 +58,6 @@ public class UserServices {
             User.get().setUser(UserUpdate.getUser());
             User.get().setPassword(UserUpdate.getPassword());
             User.get().setMail(UserUpdate.getMail());
-            User.get().setRol(UserUpdate.getRol());
             UserData.save(User.get());
         }
     }

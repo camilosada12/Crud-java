@@ -1,10 +1,15 @@
 package com.sena.school_library.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 
 @Entity(name = "BookAvaliable")
@@ -22,10 +27,22 @@ public class BookAvaliable {
     @Column(name= "Statu")
     private boolean Statu ;
 
-    public BookAvaliable(int id_BookAvaliable, int period, boolean statu) {
+    @ManyToOne
+    @JoinColumn(name= "Id_Books")
+    private Books books ; 
+
+    @OneToMany(mappedBy = "bookAvaliable")
+    private List<Question> question;    
+
+    public BookAvaliable() {
+    }
+
+    public BookAvaliable(int id_BookAvaliable, int period, boolean statu, Books books, List<Question> question) {
         Id_BookAvaliable = id_BookAvaliable;
         this.period = period;
         Statu = statu;
+        this.books = books;
+        this.question = question;
     }
 
     public int getId_BookAvaliable() {
@@ -52,5 +69,19 @@ public class BookAvaliable {
         Statu = statu;
     }
 
-    
+    public Books getBooks() {
+        return books;
+    }
+
+    public void setBooks(Books books) {
+        this.books = books;
+    }
+
+    public List<Question> getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(List<Question> question) {
+        this.question = question;
+    }  
 }

@@ -1,10 +1,15 @@
 package com.sena.school_library.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "answerd")
 public class answerd {
@@ -18,9 +23,14 @@ public class answerd {
     @Column(name= "answerdQuestion", length = 10)
     private String answerdQuestion ;
 
-    public answerd(int id_answerd, String answerdQuestion) {
-        Id_answerd = id_answerd;
-        this.answerdQuestion = answerdQuestion;
+    @OneToOne
+    @JoinColumn(name = "Id_Question")
+    private Question question;
+
+    @OneToMany(mappedBy = "answerd") 
+    private List<Result> results;
+
+    public answerd() {
     }
 
     public int getId_answerd() {
@@ -39,5 +49,21 @@ public class answerd {
         this.answerdQuestion = answerdQuestion;
     }
 
+    public Question getQuestion() {
+        return question;
+    }
 
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public List<Result> getResults() {
+        return results;
+    }
+
+    public void setResults(List<Result> results) {
+        this.results = results;
+    }
+
+   
 }

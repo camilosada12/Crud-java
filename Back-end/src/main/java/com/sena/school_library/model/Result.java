@@ -5,6 +5,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity(name = "Result")
 public class Result {
@@ -19,9 +21,23 @@ public class Result {
     @Column(name= "Note")
     private double Note;
 
-    public Result(int id_Result, double note) {
+    @ManyToOne
+    @JoinColumn(name = "Id_responseStudent")
+    private responseStudent ResponseStudent;
+
+    @ManyToOne
+    @JoinColumn(name = "Id_answerd")
+    private answerd answerd;
+
+    public Result() {
+    }
+
+    public Result(int id_Result, double note, responseStudent responseStudent,
+            com.sena.school_library.model.answerd answerd) {
         Id_Result = id_Result;
         Note = note;
+        ResponseStudent = responseStudent;
+        this.answerd = answerd;
     }
 
     public int getId_Result() {
@@ -39,4 +55,22 @@ public class Result {
     public void setNote(double note) {
         Note = note;
     }
+
+    public responseStudent getResponseStudent() {
+        return ResponseStudent;
+    }
+
+    public void setResponseStudent(responseStudent responseStudent) {
+        ResponseStudent = responseStudent;
+    }
+
+    public answerd getAnswerd() {
+        return answerd;
+    }
+
+    public void setAnswerd(answerd answerd) {
+        this.answerd = answerd;
+    }
+
+   
 }

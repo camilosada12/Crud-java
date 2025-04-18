@@ -1,10 +1,13 @@
 package com.sena.school_library.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 /*
  * anotacion bean, indica que es una entidad
@@ -24,9 +27,16 @@ public class Rol {
     @Column(name= "RoleType")
     private String RoleType;
 
-    public Rol(int id_Rol, String roleType) {
+     @OneToMany(mappedBy = "rol") 
+    private List<UserRole> userRoles;
+
+    public Rol() {
+    }
+
+    public Rol(int id_Rol, String roleType, List<UserRole> userRoles) {
         Id_Rol = id_Rol;
         RoleType = roleType;
+        this.userRoles = userRoles;
     }
 
     public int getId_Rol() {
@@ -43,5 +53,13 @@ public class Rol {
 
     public void setRoleType(String roleType) {
         RoleType = roleType;
+    }
+
+    public List<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(List<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 }

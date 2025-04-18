@@ -39,21 +39,17 @@ public class User {
     @Column(name= "Mail")
     private String Mail;
 
-    @Column(name= "Rol")
-    private String Rol;
 
-    
+    @OneToMany(mappedBy = "user") 
+    private List<Books> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<UserRole> userRoles;
 
    public User() {
     }
 
-    // Constructor que no incluye colecciones
-    public User(int id_User, String name, String lastName, String user, String password, String mail, String rol) {
-        this(id_User, name, lastName, user, password, mail, rol, null, null);  
-    }
-
-// Constructor completo si lo necesitas
-    public User(int id_User, String name, String lastName, String user, String password, String mail, String rol, 
+    public User(int id_User, String name, String lastName, String user, String password, String mail, 
                 List<Books> books, List<UserRole> userRoles) {
         Id_User = id_User;
         Name = name;
@@ -61,17 +57,10 @@ public class User {
         User = user;
         this.password = password;
         Mail = mail;
-        Rol = rol;
         this.books = books;
         this.userRoles = userRoles;
     }
 
-    @OneToMany(mappedBy = "user") 
-    private List<Books> books;
-
-    // Por esto:
-    @OneToMany(mappedBy = "user")
-    private List<UserRole> userRoles;
 
     public int getId_User() {
         return Id_User;
@@ -120,15 +109,6 @@ public class User {
     public void setMail(String mail) {
         Mail = mail;
     }
-
-    public String getRol() {
-        return Rol;
-    }
-
-    public void setRol(String rol) {
-        Rol = rol;
-    }
-
     public List<Books> getBooks() {
         return books;
     }

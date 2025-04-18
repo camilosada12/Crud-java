@@ -20,18 +20,18 @@ public class UserRole {
     
     //Referencia a otras clases
     @ManyToOne
-    @JoinColumn(name= "User", referencedColumnName = "Id_User")
+    @JoinColumn(name= "Id_User")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name= "Role",referencedColumnName = "Id_Rol")
+    @JoinColumn(name= "Id_Rol")
     private Rol rol;
-    
+
     // Constructor vacío requerido por JPA
     public UserRole() {
     }
 
-    public UserRole(int id_UserRole, com.sena.school_library.model.User user, com.sena.school_library.model.Rol rol) {
+    public UserRole(int id_UserRole, User user, Rol rol) {
         Id_UserRole = id_UserRole;
         this.user = user;
         this.rol = rol;
@@ -59,5 +59,5 @@ public class UserRole {
 
     public void setRol(Rol rol) {
         this.rol = rol;
-    }
+    }  
 }

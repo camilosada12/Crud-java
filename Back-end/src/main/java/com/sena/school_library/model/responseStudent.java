@@ -1,10 +1,15 @@
 package com.sena.school_library.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity(name = "responseStudent")
 public class responseStudent {
@@ -18,9 +23,21 @@ public class responseStudent {
     @Column(name= "answerdQuestionStuden", length = 100)
     private String answerdQuestionStuden ;
 
-    public responseStudent(int id_answerd, String answerdQuestionStuden) {
+    @OneToOne
+    @JoinColumn(name = "Id_Question")
+    private Question question;
+
+    @OneToMany(mappedBy = "ResponseStudent")
+    private List<Result> result;
+
+    public responseStudent() {
+    }
+
+    public responseStudent(int id_answerd, String answerdQuestionStuden, Question question, List<Result> result) {
         Id_answerd = id_answerd;
         this.answerdQuestionStuden = answerdQuestionStuden;
+        this.question = question;
+        this.result = result;
     }
 
     public int getId_answerd() {
@@ -38,4 +55,22 @@ public class responseStudent {
     public void setAnswerdQuestionStuden(String answerdQuestionStuden) {
         this.answerdQuestionStuden = answerdQuestionStuden;
     }
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
+
+    public List<Result> getResult() {
+        return result;
+    }
+
+    public void setResult(List<Result> result) {
+        this.result = result;
+    }
+
+   
 }

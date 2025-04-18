@@ -1,5 +1,7 @@
 package com.sena.school_library.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,6 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "Books")
 public class Books {
@@ -21,6 +24,13 @@ public class Books {
     @JoinColumn(name = "user_id") 
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "Id_Subjects") 
+    private Subjects subjects;
+
+    @OneToMany(mappedBy = "books") 
+    private List<BookAvaliable> bookAvaliable;
+
     @Column(name= "Book", length = 100)
     private int Book;
 
@@ -33,8 +43,15 @@ public class Books {
     @Column(name= "author")
     private String author;
 
-    public Books(int id_Books, int book, int content, int pages, String author) {
+    public Books() {
+    }
+
+    public Books(int id_Books, User user, Subjects subjects, List<BookAvaliable> bookAvaliable, int book, int content,
+            int pages, String author) {
         Id_Books = id_Books;
+        this.user = user;
+        this.subjects = subjects;
+        this.bookAvaliable = bookAvaliable;
         Book = book;
         Content = content;
         this.pages = pages;
@@ -47,6 +64,30 @@ public class Books {
 
     public void setId_Books(int id_Books) {
         Id_Books = id_Books;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Subjects getSubjects() {
+        return subjects;
+    }
+
+    public void setSubjects(Subjects subjects) {
+        this.subjects = subjects;
+    }
+
+    public List<BookAvaliable> getBookAvaliable() {
+        return bookAvaliable;
+    }
+
+    public void setBookAvaliable(List<BookAvaliable> bookAvaliable) {
+        this.bookAvaliable = bookAvaliable;
     }
 
     public int getBook() {

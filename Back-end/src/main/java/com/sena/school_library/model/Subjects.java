@@ -1,10 +1,13 @@
 package com.sena.school_library.model;
 
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 
 @Entity(name = "Subjects")
 public class Subjects {
@@ -19,9 +22,16 @@ public class Subjects {
     @Column(name= "SubjectsClasses")
     private String SubjectsClasses;
 
-    public Subjects(int id_Subjects, String subjectsClasses) {
+    @OneToMany(mappedBy= "subjects")
+    private List<Books> books;
+
+    public Subjects() {
+    }
+
+    public Subjects(int id_Subjects, String subjectsClasses, List<Books> books) {
         Id_Subjects = id_Subjects;
         SubjectsClasses = subjectsClasses;
+        this.books = books;
     }
 
     public int getId_Subjects() {
@@ -39,4 +49,12 @@ public class Subjects {
     public void setSubjectsClasses(String subjectsClasses) {
         SubjectsClasses = subjectsClasses;
     }
+
+    public List<Books> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Books> books) {
+        this.books = books;
+    } 
 }

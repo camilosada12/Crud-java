@@ -8,20 +8,17 @@ public class requestRegisterUser {
     private String user;
     private String mail;
     private String password;
-    private String rol;
 
     public requestRegisterUser(){
     }
 
-    public requestRegisterUser(int id_user, String name, String lastname, String user, String mail, String password,
-            String rol) {
+    public requestRegisterUser(int id_user, String name, String lastname, String user, String mail, String password) {
         this.id_user = id_user;
         this.name = name;
         this.lastname = lastname;
         this.user = user;
         this.mail = mail;
         this.password = password;
-        this.rol = rol;
     }
 
     public int getId_user() {
@@ -70,16 +67,5 @@ public class requestRegisterUser {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-    
-    
-    
+    } 
 }
