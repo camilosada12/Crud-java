@@ -1,5 +1,7 @@
 package com.sena.school_library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -21,10 +23,12 @@ public class UserRole {
     //Referencia a otras clases
     @ManyToOne
     @JoinColumn(name= "Id_User")
+    @JsonBackReference(value = "user-userrole")
     private User user;
 
     @ManyToOne
     @JoinColumn(name= "Id_Rol")
+    @JsonBackReference(value = "rol-userrole")
     private Rol rol;
 
     // Constructor vacío requerido por JPA

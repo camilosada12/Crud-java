@@ -1,17 +1,16 @@
 package com.sena.school_library.interfaces;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
-import com.sena.school_library.model.User;
+
+import com.sena.school_library.model.Books;
 
 /*
  * JpaRepository<entidad, tipo de dato de PK>
  */
+
 @Repository
-public interface IUser extends JpaRepository<User,Integer>{
+public interface IBooks extends JpaRepository<Books, Integer> {
     /*
      * JpaRepository incluye
      * SELECT
@@ -20,8 +19,4 @@ public interface IUser extends JpaRepository<User,Integer>{
      * DELETE
      * por defecto
      */
-
-     @Query ("SELECT u FROM user_person u WHERE u.LastName LIKE %?1% ")
-     List<User> filterFormName(String filter);
 }
-

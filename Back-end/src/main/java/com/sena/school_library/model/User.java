@@ -2,6 +2,8 @@ package com.sena.school_library.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -41,12 +43,14 @@ public class User {
 
 
     @OneToMany(mappedBy = "user") 
+    @JsonManagedReference
     private List<Books> books;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference(value = "user-userrole")
     private List<UserRole> userRoles;
 
-   public User() {
+    public User() {
     }
 
     public User(int id_User, String name, String lastName, String user, String password, String mail, 

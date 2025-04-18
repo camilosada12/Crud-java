@@ -32,10 +32,10 @@ public class Books {
     private List<BookAvaliable> bookAvaliable;
 
     @Column(name= "Book", length = 100)
-    private int Book;
+    private String Book;
 
     @Column(name= "Content", length = 100)
-    private int Content;
+    private String Content;
 
     @Column(name= "pages", length = 50)
     private int pages;
@@ -46,8 +46,8 @@ public class Books {
     public Books() {
     }
 
-    public Books(int id_Books, User user, Subjects subjects, List<BookAvaliable> bookAvaliable, int book, int content,
-            int pages, String author) {
+    public Books(int id_Books, User user, Subjects subjects, List<BookAvaliable> bookAvaliable, String book,
+            String content, int pages, String author) {
         Id_Books = id_Books;
         this.user = user;
         this.subjects = subjects;
@@ -90,19 +90,19 @@ public class Books {
         this.bookAvaliable = bookAvaliable;
     }
 
-    public int getBook() {
+    public String getBook() {
         return Book;
     }
 
-    public void setBook(int book) {
+    public void setBook(String book) {
         Book = book;
     }
 
-    public int getContent() {
+    public String getContent() {
         return Content;
     }
 
-    public void setContent(int content) {
+    public void setContent(String content) {
         Content = content;
     }
 
@@ -122,5 +122,5 @@ public class Books {
         this.author = author;
     }
 
-    
+   
 }

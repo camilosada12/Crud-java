@@ -2,6 +2,8 @@ package com.sena.school_library.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +29,8 @@ public class Rol {
     @Column(name= "RoleType")
     private String RoleType;
 
-     @OneToMany(mappedBy = "rol") 
+    @OneToMany(mappedBy = "rol") 
+    @JsonManagedReference(value = "rol-userrole")
     private List<UserRole> userRoles;
 
     public Rol() {

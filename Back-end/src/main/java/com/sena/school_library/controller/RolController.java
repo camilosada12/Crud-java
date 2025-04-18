@@ -42,7 +42,7 @@ public class RolController {
         return new ResponseEntity<Object>(ListRol,HttpStatus.OK);
     }
 
-     @GetMapping("/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Object> findByIdRol(@PathVariable int id){
         var rol = rolServices.findByIdRol(id);
         return new ResponseEntity<>(rol, HttpStatus.OK);
