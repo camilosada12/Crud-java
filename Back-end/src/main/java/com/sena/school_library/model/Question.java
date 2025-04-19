@@ -1,5 +1,6 @@
 package com.sena.school_library.model;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,7 +30,7 @@ public class Question {
     @OneToOne(mappedBy = "question")
     private responseStudent responseStudent;
 
-    @OneToOne(mappedBy = "question")
+    @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
     private answerd answerds;
 
     public Question() {

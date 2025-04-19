@@ -21,8 +21,8 @@ public class BookAvaliable {
     @Column(name= "Id_BookAvaliable", length = 10)
     private int Id_BookAvaliable ;
 
-    @Column(name= "period", length = 10)
-    private int period ;
+    @Column(name= "period", length = 100)
+    private String period ;
 
     @Column(name= "Statu")
     private boolean Statu ;
@@ -37,7 +37,7 @@ public class BookAvaliable {
     public BookAvaliable() {
     }
 
-    public BookAvaliable(int id_BookAvaliable, int period, boolean statu, Books books, List<Question> question) {
+    public BookAvaliable(int id_BookAvaliable, String period, boolean statu, Books books, List<Question> question) {
         Id_BookAvaliable = id_BookAvaliable;
         this.period = period;
         Statu = statu;
@@ -53,15 +53,15 @@ public class BookAvaliable {
         Id_BookAvaliable = id_BookAvaliable;
     }
 
-    public int getPeriod() {
+    public String getPeriod() {
         return period;
     }
 
-    public void setPeriod(int period) {
+    public void setPeriod(String period) {
         this.period = period;
     }
 
-    public boolean isStatu() {
+    public boolean getStatu() {
         return Statu;
     }
 
@@ -83,5 +83,7 @@ public class BookAvaliable {
 
     public void setQuestion(List<Question> question) {
         this.question = question;
-    }  
+    }
+
+   
 }

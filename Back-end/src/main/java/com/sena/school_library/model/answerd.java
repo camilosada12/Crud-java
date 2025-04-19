@@ -20,11 +20,11 @@ public class answerd {
     @Column(name= "Id_answerd", length = 10)
     private int Id_answerd ;
 
-    @Column(name= "answerdQuestion", length = 10)
+    @Column(name= "answerdQuestion", length = 255)
     private String answerdQuestion ;
 
     @OneToOne
-    @JoinColumn(name = "Id_Question")
+    @JoinColumn(name = "question_id")
     private Question question;
 
     @OneToMany(mappedBy = "answerd") 
