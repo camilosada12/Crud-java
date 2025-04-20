@@ -23,6 +23,10 @@ public class Question {
     @Column(name= "questionBooks")
     private String questionBooks;
 
+    @Column(name = "answered")
+    private String answered;
+
+
     @ManyToOne
     @JoinColumn(name = "Id_BookAvaliable")
     private BookAvaliable bookAvaliable;
@@ -36,10 +40,11 @@ public class Question {
     public Question() {
     }
 
-    public Question(int id_Question, String questionBooks, BookAvaliable bookAvaliable,
+    public Question(int id_Question, String questionBooks, String answered, BookAvaliable bookAvaliable,
             com.sena.school_library.model.responseStudent responseStudent, answerd answerds) {
         Id_Question = id_Question;
         this.questionBooks = questionBooks;
+        this.answered = answered;
         this.bookAvaliable = bookAvaliable;
         this.responseStudent = responseStudent;
         this.answerds = answerds;
@@ -59,6 +64,14 @@ public class Question {
 
     public void setQuestionBooks(String questionBooks) {
         this.questionBooks = questionBooks;
+    }
+
+    public String getAnswered() {
+        return answered;
+    }
+
+    public void setAnswered(String answered) {
+        this.answered = answered;
     }
 
     public BookAvaliable getBookAvaliable() {

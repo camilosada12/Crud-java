@@ -1,34 +1,27 @@
 package com.sena.school_library.model;
 
-import java.util.List;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 
 @Entity(name = "answerd")
 public class answerd {
-    @Id
-    //El valor sea autoGenerado e autoIncrementar
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@colum indica que el valor es una columna en la base de datos 
-    @Column(name= "Id_answerd", length = 10)
-    private int Id_answerd ;
 
-    @Column(name= "answerdQuestion", length = 255)
-    private String answerdQuestion ;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "Id_answerd", length = 10)
+    private int Id_answerd;
+
+    @Column(name = "answerdQuestion", length = 255)
+    private String answerdQuestion;
 
     @OneToOne
     @JoinColumn(name = "question_id")
     private Question question;
-
-    @OneToMany(mappedBy = "answerd") 
-    private List<Result> results;
 
     public answerd() {
     }
@@ -56,14 +49,4 @@ public class answerd {
     public void setQuestion(Question question) {
         this.question = question;
     }
-
-    public List<Result> getResults() {
-        return results;
-    }
-
-    public void setResults(List<Result> results) {
-        this.results = results;
-    }
-
-   
 }

@@ -1,43 +1,38 @@
 package com.sena.school_library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.Id; // Cambiado de OneToOne a ManyToOne
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Entity(name = "Result")
-public class Result {
-      //Id= PK
+public class Resultado {
+
     @Id
-    //El valor sea autoGenerado e autoIncrementar
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@colum indica que el valor es una columna en la base de datos 
-    @Column(name= "Id_Result", length = 10)
+    @Column(name = "Id_Result", length = 10)
     private int Id_Result;
 
-    @Column(name= "Note")
+    @Column(name = "Note")
     private double Note;
 
     @ManyToOne
-    @JoinColumn(name = "Id_responseStudent")
-    private responseStudent ResponseStudent;
+    @JoinColumn(name = "response_student_id")
+    @JsonBackReference
+    private responseStudent responseStudent;
 
-    @ManyToOne
-    @JoinColumn(name = "Id_answerd")
-    private answerd answerd;
-
-    public Result() {
+    public Resultado() {
     }
 
-    public Result(int id_Result, double note, responseStudent responseStudent,
-            com.sena.school_library.model.answerd answerd) {
+    public Resultado(int id_Result, double note, com.sena.school_library.model.responseStudent responseStudent) {
         Id_Result = id_Result;
         Note = note;
-        ResponseStudent = responseStudent;
-        this.answerd = answerd;
+        this.responseStudent = responseStudent;
     }
 
     public int getId_Result() {
@@ -57,20 +52,12 @@ public class Result {
     }
 
     public responseStudent getResponseStudent() {
-        return ResponseStudent;
+        return responseStudent;
     }
 
     public void setResponseStudent(responseStudent responseStudent) {
-        ResponseStudent = responseStudent;
+        this.responseStudent = responseStudent;
     }
 
-    public answerd getAnswerd() {
-        return answerd;
-    }
 
-    public void setAnswerd(answerd answerd) {
-        this.answerd = answerd;
-    }
-
-   
 }
