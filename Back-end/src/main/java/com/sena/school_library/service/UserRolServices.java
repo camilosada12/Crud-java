@@ -21,8 +21,8 @@ public class UserRolServices {
      * @Autowired = Incluye la conexion de la interface
      */
 
-     @Autowired
-     private IUserRol UserRolData;
+    @Autowired
+    private IUserRol UserRolData;
 
     public List<requestRegisterUserRol> findAllUserRol(){
     List<UserRole> entities = UserRolData.findAll();

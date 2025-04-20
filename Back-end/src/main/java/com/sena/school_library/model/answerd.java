@@ -25,6 +25,14 @@ public class answerd {
 
     public answerd() {
     }
+    
+
+    public answerd(int id_answerd, String answerdQuestion, Question question) {
+        Id_answerd = id_answerd;
+        this.answerdQuestion = answerdQuestion;
+        this.question = question;
+    }
+
 
     public int getId_answerd() {
         return Id_answerd;

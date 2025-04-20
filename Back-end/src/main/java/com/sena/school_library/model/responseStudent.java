@@ -30,7 +30,7 @@ public class responseStudent {
     @JoinColumn(name = "Id_Question")
     private Question question;
 
-    @OneToMany(mappedBy = "responseStudent")
+    @OneToMany(mappedBy = "responseStudent", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonManagedReference
     private List<Resultado> results;
 
