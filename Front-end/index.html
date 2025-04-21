@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar y Tabla Centrada</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav class="bg-dark text-white p-3 vh-100 position-fixed" style="width: 220px;">
+            <h4>Menú</h4>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active text-white" href="#">User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Role</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">UserRole</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Books</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Subjects</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Questions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">BooksAvaliable</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Answers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">ResponseStudent</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="#">Result</a>
+                </li>
+            </ul>
+        </nav>
+
+         <!-- Contenido principal -->
+         <div class="flex-grow-1 ms-5" style="margin-left: 220px; padding: 20px;">
+            <h1 class="text-center mb-4">Entidad User</h1>
+
+            <!-- Formulario de usuario -->
+            <div id="formContainer" class="container mb-5 ">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card shadow">
+                            <div class="card-header bg-dark text-white text-center">
+                                <h4 class="mb-0">Formulario de Usuario</h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="userForm">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Name</label>
+                                        <input type="text" class="form-control" id="name" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="lastname" class="form-label">LastName</label>
+                                        <input type="text" class="form-control" id="lastname" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label">Username</label>
+                                        <input type="text" class="form-control" id="username" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Password</label>
+                                        <input type="password" class="form-control" id="password" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="mail" class="form-label">Mail</label>
+                                        <input type="email" class="form-control" id="mail" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Guardar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabla centrada (oculta por defecto) -->
+            <div id="tableContainer" class="table-responsive w-75 mx-auto " >
+                <div class="ocultar">
+                    <table class="table table-bordered text-center ">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>Id</th>
+                                <th>Name</th>
+                                <th>LastName</th>
+                                <th>User</th>
+                                <th>Password</th>
+                                <th>Mail</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <!-- Aquí van los datos -->
+                        </tbody>
+                    </table>
+                </div>
+                
+            </div>
+            
+        </div>
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.js"></script>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
