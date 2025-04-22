@@ -7,55 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const apiUrl = "http://localhost:8080/api/v1/rol/";
 
+    // Inicialmente mostrar la tabla
     mostrarTabla();
-    cargarRoles();
-
-    form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
-        const idEditando = form.dataset.editing;
-
-        const rol = {
-            id_rol: idEditando ? parseInt(idEditando) : 0,
-            roletype: document.getElementById("type_Role").value.trim()
-        };
-
-        const metodo = idEditando ? "PUT" : "POST";
-        const url = apiUrl;
-
-        fetch(url, {
-            method: metodo,
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(rol),
-            mode: "cors",
-            credentials: "include",
-        })
-        .then((response) => {
-            if (!response.ok) {
-                throw new Error("Error en la respuesta del servidor");
-            }
-            const contentType = response.headers.get("content-type");
-            if (contentType && contentType.includes("application/json")) {
-                return response.json();
-            } else {
-                return response.text(); // ← Maneja texto plano para evitar el error
-            }
-        })
-        .then((data) => {
-            console.log("Respuesta del servidor:", data);
-            form.reset();
-            delete form.dataset.editing;
-            cargarRoles();
-            ocultarFormulario();
-            mostrarTabla();
-        })
-        .catch((error) => {
-            console.error("Error al guardar rol:", error);
-            alert("Error al guardar: " + error.message);
-        });
-    });
 
     function ocultarFormulario() {
         formRow.classList.add("ocultar");
@@ -74,6 +27,58 @@ document.addEventListener("DOMContentLoaded", function () {
         tableContainer.classList.add("ocultar");
     }
 
+    // Cargar roles al inicio
+    cargarRoles();
+
+    // Configurar manejo del formulario
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const idEditando = form.dataset.editing;
+
+        const rol = {
+            id_rol: idEditando ? parseInt(idEditando) : 0,
+            roletype: document.getElementById("type_Role").value.trim()
+        };
+
+        console.log("Rol a enviar:", rol);
+
+        const metodo = idEditando ? "PUT" : "POST";
+        const url = apiUrl;
+
+        fetch(url, {
+            method: metodo,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(rol),
+            mode: "cors",
+            credentials: "include",
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error("Error en la respuesta del servidor");
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log(`Rol ${idEditando ? "actualizado" : "creado"} correctamente:`, data);
+            form.reset();
+            delete form.dataset.editing;
+            
+            // Esta es la parte clave: cargar los roles, ocultar el formulario y mostrar la tabla
+            cargarRoles();
+            ocultarFormulario();
+            mostrarTabla();
+        })
+        .catch((error) => {
+            console.error("Error al guardar rol:", error);
+            cargarRoles();
+            ocultarFormulario();
+            mostrarTabla();
+        });
+    });
+
     function cargarRoles() {
         fetch(apiUrl, {
             method: "GET",
@@ -89,16 +94,18 @@ document.addEventListener("DOMContentLoaded", function () {
             } else {
                 return response.text();
             }
+            
         })
         .then((data) => {
             console.log("Roles cargados:", data);
 
             tableBody.innerHTML = "";
 
-            const roles = Array.isArray(data) ? data : [];
+            const hayDatos = Array.isArray(data) && data.length > 0;
 
-            if (roles.length > 0) {
-                roles.forEach((rol) => {
+            if (hayDatos) {
+                data.forEach((rol) => {
+                    // Manejar diferentes posibles nombres de propiedades
                     const id = rol.id_Rol || rol.id_rol || "N/A";
                     const type_role = rol.roleType || rol.roletype || "N/A";
 
@@ -116,7 +123,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             } else {
                 const row = document.createElement("tr");
-                row.innerHTML = `<td colspan="3" class="text-center">No hay roles registrados</td>`;
+                row.innerHTML = `
+                    <td colspan="3" class="text-center">No hay roles registrados</td>
+                `;
                 tableBody.appendChild(row);
 
                 const actionRow = document.createElement("tr");
@@ -130,6 +139,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 tableBody.appendChild(actionRow);
             }
 
+            // Configurar eventos para los botones
             configurarBotones();
         })
         .catch((error) => {
@@ -146,11 +156,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     </td>
                 </tr>
             `;
+            
             configurarBotones();
         });
     }
 
     function configurarBotones() {
+        // Configurar botón de crear
         document.querySelectorAll(".crear-btn").forEach((btn) => {
             btn.addEventListener("click", () => {
                 form.reset();
@@ -160,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
+        // Configurar botones de editar
         document.querySelectorAll(".editar-btn:not([disabled])").forEach((btn) => {
             btn.addEventListener("click", () => {
                 const id = btn.getAttribute("data-id");
@@ -167,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         });
 
+        // Configurar botones de eliminar
         document.querySelectorAll(".eliminar-btn:not([disabled])").forEach((btn) => {
             btn.addEventListener("click", () => {
                 const id = btn.getAttribute("data-id");
@@ -187,8 +201,15 @@ document.addEventListener("DOMContentLoaded", function () {
             return response.json();
         })
         .then((rol) => {
+            // Manejar diferentes posibles nombres de propiedades
             document.getElementById("type_Role").value = rol.roleType || rol.roletype || "";
+
+            console.log("Datos cargados en el formulario:", {
+                type_Role: document.getElementById("type_Role").value
+            });
+
             form.dataset.editing = id;
+
             ocultarTabla();
             mostrarFormulario();
         })

@@ -50,7 +50,7 @@
 
          <!-- Contenido principal -->
          <div class="flex-grow-1 ms-5" style="margin-left: 220px; padding: 20px;">
-            <h1 class="text-center mb-4">Entidad Rol</h1>
+            <h1 class="text-center mb-4">Entidad UserRol</h1>
 
             <!-- Formulario de usuario -->
             <div id="formContainer" class="container mb-5 ">
@@ -58,13 +58,17 @@
                     <div class="col-md-8">
                         <div class="card shadow">
                             <div class="card-header bg-dark text-white text-center">
-                                <h4 class="mb-0">Formulario de Rol</h4>
+                                <h4 class="mb-0">Formulario de Usuario</h4>
                             </div>
                             <div class="card-body">
                                 <form id="userForm">
                                     <div class="mb-3">
-                                        <label for="type_Role" class="form-label">Type_Role</label>
-                                        <input type="text" class="form-control" id="type_Role" required>
+                                        <label for="Id_rol" class="form-label">Id_rol</label>
+                                        <input type="text" class="form-control" id="Id_rol" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="Id_User" class="form-label">Id_User</label>
+                                        <input type="text" class="form-control" id="Id_User" required>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </form>
@@ -81,11 +85,15 @@
                         <thead class="table-dark">
                             <tr>
                                 <th>Id</th>
-                                <th>Type_Role</th>
-                                <th>Acciones</th>
+                                <th>Name</th>
+                                <th>LastName</th>
+                                <th>User</th>
+                                <th>Password</th>
+                                <th>Mail</th>
+                                <th>acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="userTableBody">
+                        <tbody id="userRolTableBody">
                             <!-- Aquí van los datos -->
                         </tbody>
                     </table>
@@ -97,7 +105,7 @@
     </div>
 
     <script src="bootstrap/js/bootstrap.bundle.js"></script>
-    <script src="js/Rol.js"></script>
+    <script src="js/UserRol.js"></script>
 </body>
 
 </html>
