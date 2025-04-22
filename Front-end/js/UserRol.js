@@ -4,8 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const formContainer = document.getElementById("formContainer");
     const formRow = formContainer.querySelector(".row");
     const tableBody = document.getElementById("userRolTableBody");
+    const rolSelect = document.getElementById("Id_rol");
+    const userSelect = document.getElementById("Id_User");
 
     const apiUrl = "http://localhost:8080/api/v1/userRol/";
+    const rolApiUrl = "http://localhost:8080/api/v1/rol/"; // Ajusta esta URL según tu API
+    const userApiUrl = "http://localhost:8080/api/v1/user/"; // Ajusta esta URL según tu API
 
     // Crear botón dinámico "Crear Nuevo" y agregarlo al lado de los otros botones
     const nuevoBtn = document.createElement("button");
@@ -17,6 +21,8 @@ document.addEventListener("DOMContentLoaded", function () {
         ocultarTabla();
         mostrarFormulario();
     });
+
+    mostrarTabla();
 
     // Agregar el botón al contenedor de la tabla
     const buttonContainer = document.createElement("div");
@@ -45,8 +51,95 @@ document.addEventListener("DOMContentLoaded", function () {
         nuevoBtn.classList.add("ocultar");
     }
 
+    // Cargar roles y usuarios al iniciar
+    cargarRoles();
+    cargarUsuarios();
     crearUserRol();
     cargarUserRoles();
+
+    // Función para cargar roles en el select
+    function cargarRoles() {
+        return new Promise((resolve, reject) => {
+            fetch(rolApiUrl, {
+                method: "GET",
+                mode: "cors"
+            })
+                .then((response) => {
+                    if (!response.ok) throw new Error("Error al cargar roles");
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("Datos de roles recibidos:", data); // Para depuración
+
+                    // Limpiar opciones existentes excepto la primera
+                    rolSelect.innerHTML = '<option value="">Seleccione un rol</option>';
+
+                    // Verificar la estructura correcta según lo que mostraste antes
+                    let roles = [];
+
+                    if (Array.isArray(data)) {
+                        roles = data;
+                    } else if (data.userRoles && Array.isArray(data.userRoles)) {
+                        roles = data.userRoles;
+                    }
+
+                    roles.forEach(rol => {
+                        const option = document.createElement("option");
+                        option.value = rol.id_Rol || rol.id_rol || rol.id || "";
+                        option.textContent = rol.roleType || rol.role_type || rol.rol_name || "Rol sin nombre";
+                        rolSelect.appendChild(option);
+                    });
+                    resolve();
+                })
+                .catch((error) => {
+                    console.error("Error al cargar roles:", error);
+                    reject(error);
+                });
+        });
+    }
+
+    // Función para cargar usuarios en el select
+    function cargarUsuarios() {
+        return new Promise((resolve, reject) => {
+            fetch(userApiUrl, {
+                method: "GET",
+                mode: "cors"
+            })
+                .then((response) => {
+                    if (!response.ok) throw new Error("Error al cargar usuarios");
+                    return response.json();
+                })
+                .then((data) => {
+                    console.log("Datos de usuarios recibidos:", data); // Para depuración
+
+                    // Limpiar opciones existentes excepto la primera
+                    userSelect.innerHTML = '<option value="">Seleccione un usuario</option>';
+
+                    // Agregar cada usuario como una opción
+                    const usuarios = Array.isArray(data) ? data : [];
+                    usuarios.forEach(usuario => {
+                        const option = document.createElement("option");
+                        option.value = usuario.id_user || usuario.id; // Ajusta según la estructura de tu API
+
+                        // Mostrar nombre completo de usuario si está disponible
+                        let displayText = usuario.user_name || usuario.user || "Usuario";
+                        if (usuario.name && usuario.lastName) {
+                            displayText = `${usuario.name} ${usuario.lastName} (${displayText})`;
+                        } else if (usuario.full_name) {
+                            displayText = usuario.full_name;
+                        }
+
+                        option.textContent = displayText;
+                        userSelect.appendChild(option);
+                    });
+                    resolve();
+                })
+                .catch((error) => {
+                    console.error("Error al cargar usuarios:", error);
+                    reject(error);
+                });
+        });
+    }
 
     function crearUserRol() {
         form.addEventListener("submit", function (e) {
@@ -56,9 +149,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Estructura según el DTO en el backend para UserRol
             const userRolData = {
-                id: idEditando ? parseInt(idEditando) : 0,
-                id_rol: parseInt(document.getElementById("Id_rol").value.trim()),
-                id_user: parseInt(document.getElementById("Id_User").value.trim())
+                id_user_rol: idEditando ? parseInt(idEditando) : 0,
+                id_rol: parseInt(document.getElementById("Id_rol").value),
+                id_user: parseInt(document.getElementById("Id_User").value)
             };
 
             // Verificar si los valores están vacíos
@@ -99,7 +192,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch((error) => {
                     console.error("Error al guardar:", error);
-                    alert("Error al guardar: " + error.message);
+                    cargarUserRoles();
+                    ocultarFormulario();
+                    mostrarTabla();
                 });
         });
     }
@@ -115,29 +210,35 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then((data) => {
                 tableBody.innerHTML = "";
+                console.log("Datos de UserRoles recibidos:", data); // Para depuración
 
                 const userRoles = Array.isArray(data) ? data : [];
 
                 if (userRoles.length > 0) {
                     userRoles.forEach((userRole) => {
-                        // Ajusta estos campos según la estructura real de tu respuesta API
-                        const id = userRole.id !== undefined ? userRole.id : 'N/A';
+                        // Ajustado para usar las propiedades correctas según la estructura de la API
+                        const id = userRole.id_user_rol !== undefined ? userRole.id_user_rol : 'N/A';
                         const idRol = userRole.id_rol !== undefined ? userRole.id_rol : 'N/A';
                         const idUser = userRole.id_user !== undefined ? userRole.id_user : 'N/A';
-                        const name = userRole.name !== undefined ? userRole.name : 'N/A';
-                        const lastName = userRole.lastName !== undefined ? userRole.lastName : 'N/A';
-                        const user = userRole.user !== undefined ? userRole.user : 'N/A';
-                        const password = userRole.password !== undefined ? userRole.password : 'N/A';
-                        const mail = userRole.mail !== undefined ? userRole.mail : 'N/A';
+
+                        // Mostrar nombre de usuario completo si está disponible
+                        let userName = userRole.user_name || 'N/A';
+                        if (userRole.name && userRole.lastName) {
+                            userName = `${userRole.name} ${userRole.lastName} (${userName})`;
+                        } else if (userRole.full_name) {
+                            userName = userRole.full_name;
+                        }
+
+                        // Mostrar nombre de rol
+                        const rolName = userRole.rol_name || userRole.roleType || 'N/A';
 
                         const row = document.createElement("tr");
                         row.innerHTML = `
                             <td>${id}</td>
-                            <td>${name}</td>
-                            <td>${lastName}</td>
-                            <td>${user}</td>
-                            <td>${password}</td>
-                            <td>${mail}</td>
+                            <td>${idUser}</td>
+                            <td>${userName}</td>
+                            <td>${idRol}</td>
+                            <td>${rolName}</td>
                             <td>
                                 <button class="btn btn-sm btn-warning editar-btn" data-id="${id}">Editar</button>
                                 <button class="btn btn-sm btn-danger eliminar-btn" data-id="${id}">Eliminar</button>
@@ -148,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else {
                     tableBody.innerHTML = `
                         <tr>
-                            <td colspan="7" class="text-center">No hay registros</td>
+                            <td colspan="6" class="text-center">No hay registros</td>
                         </tr>
                     `;
                 }
@@ -169,7 +270,7 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch((error) => {
                 console.error("Error al cargar:", error);
-                tableBody.innerHTML = `<tr><td colspan="7" class="text-center">Error al cargar datos</td></tr>`;
+                tableBody.innerHTML = `<tr><td colspan="6" class="text-center">Error al cargar datos</td></tr>`;
             });
     }
 
@@ -180,13 +281,74 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then((data) => {
-                form.dataset.editing = data.id;
-                document.getElementById("Id_rol").value = data.id_rol;
-                document.getElementById("Id_User").value = data.id_user;
-                ocultarTabla();
-                mostrarFormulario();
+                console.log("Datos recibidos para editar:", data);
+
+                // Guardamos los IDs que necesitamos seleccionar
+                const userId = data.id_user;
+                const rolId = data.id_rol;
+
+                console.log(`Necesitamos seleccionar: Usuario ID=${userId}, Rol ID=${rolId}`);
+
+                // Primero cargamos ambos selectores con datos frescos
+                Promise.all([cargarUsuarios(), cargarRoles()])
+                    .then(() => {
+                        // Guardamos el ID en el formulario para el envío
+                        form.dataset.editing = data.id_user_rol;
+
+                        // Ahora seleccionamos los valores correctos en los dropdowns
+                        const rolSelect = document.getElementById("Id_rol");
+                        const userSelect = document.getElementById("Id_User");
+
+                        // Para debugging
+                        console.log("Opciones de usuarios disponibles:",
+                            [...userSelect.options].map(o => `${o.value} - ${o.text}`));
+
+                        // Convertimos los IDs a string para la comparación con option.value
+                        const userIdStr = String(userId);
+                        const rolIdStr = String(rolId);
+
+                        // Seleccionamos el usuario correcto
+                        let userFound = false;
+                        for (let i = 0; i < userSelect.options.length; i++) {
+                            if (userSelect.options[i].value === userIdStr) {
+                                userSelect.selectedIndex = i;
+                                userFound = true;
+                                console.log(`Usuario encontrado y seleccionado: ${userSelect.options[i].text}`);
+                                break;
+                            }
+                        }
+
+                        if (!userFound) {
+                            console.warn(`No se encontró una opción para el usuario con ID ${userId}`);
+                        }
+
+                        // Seleccionamos el rol correcto
+                        let rolFound = false;
+                        for (let i = 0; i < rolSelect.options.length; i++) {
+                            if (rolSelect.options[i].value === rolIdStr) {
+                                rolSelect.selectedIndex = i;
+                                rolFound = true;
+                                console.log(`Rol encontrado y seleccionado: ${rolSelect.options[i].text}`);
+                                break;
+                            }
+                        }
+
+                        if (!rolFound) {
+                            console.warn(`No se encontró una opción para el rol con ID ${rolId}`);
+                        }
+
+                        // Mostramos el formulario
+                        ocultarTabla();
+                        mostrarFormulario();
+                    })
+                    .catch(error => {
+                        console.error("Error al cargar selectores para edición:", error);
+                    });
             })
-            .catch((error) => console.error("Error al editar:", error));
+            .catch((error) => {
+                console.error("Error al editar:", error);
+                alert("Error al obtener los datos para editar");
+            });
     }
 
     function eliminarUserRol(id) {

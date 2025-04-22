@@ -2,6 +2,8 @@ package com.sena.school_library.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,6 +26,7 @@ public class Books {
     @JoinColumn(name = "user_id") 
     private User user;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "Id_Subjects") 
     private Subjects subjects;

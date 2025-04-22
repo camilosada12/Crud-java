@@ -48,8 +48,8 @@
             </ul>
         </nav>
 
-         <!-- Contenido principal -->
-         <div class="flex-grow-1 ms-5" style="margin-left: 220px; padding: 20px;">
+        <!-- Contenido principal -->
+        <div class="flex-grow-1 ms-5" style="margin-left: 220px; padding: 20px;">
             <h1 class="text-center mb-4">Entidad UserRol</h1>
 
             <!-- Formulario de usuario -->
@@ -63,12 +63,18 @@
                             <div class="card-body">
                                 <form id="userForm">
                                     <div class="mb-3">
-                                        <label for="Id_rol" class="form-label">Id_rol</label>
-                                        <input type="text" class="form-control" id="Id_rol" required>
+                                        <label for="Id_rol" class="form-label">Rol</label>
+                                        <select class="form-select" id="Id_rol" required>
+                                            <option value="">Seleccione un rol</option>
+                                            <!-- Las opciones de roles se cargarán dinámicamente -->
+                                        </select>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="Id_User" class="form-label">Id_User</label>
-                                        <input type="text" class="form-control" id="Id_User" required>
+                                        <label for="Id_User" class="form-label">Usuario</label>
+                                        <select class="form-select" id="Id_User" required>
+                                            <option value="">Seleccione un usuario</option>
+                                            <!-- Las opciones de usuarios se cargarán dinámicamente -->
+                                        </select>
                                     </div>
                                     <button type="submit" class="btn btn-primary">Guardar</button>
                                 </form>
@@ -79,18 +85,17 @@
             </div>
 
             <!-- Tabla centrada (oculta por defecto) -->
-            <div id="tableContainer" class="table-responsive w-75 mx-auto " >
+            <div id="tableContainer" class="table-responsive w-75 mx-auto ">
                 <div class="ocultar">
                     <table class="table table-bordered text-center ">
                         <thead class="table-dark">
                             <tr>
                                 <th>Id</th>
-                                <th>Name</th>
-                                <th>LastName</th>
-                                <th>User</th>
-                                <th>Password</th>
-                                <th>Mail</th>
-                                <th>acciones</th>
+                                <th>Id_User</th>
+                                <th>user name</th>
+                                <th>id_rol</th>
+                                <th>rol_name</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="userRolTableBody">
@@ -98,9 +103,9 @@
                         </tbody>
                     </table>
                 </div>
-                
+
             </div>
-            
+
         </div>
     </div>
 

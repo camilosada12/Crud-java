@@ -52,7 +52,6 @@ Table Answers {
   id int [primary key]
   AnswerQuestions text
   questionsId int [ref: - questions.id]
-  ResultId int [ref: < Result.id]
 }
 
 Table responseStudent {
