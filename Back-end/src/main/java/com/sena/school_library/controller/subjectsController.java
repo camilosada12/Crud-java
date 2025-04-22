@@ -3,6 +3,7 @@ package com.sena.school_library.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sena.school_library.DTO.requestRegisterSubjects;
@@ -18,6 +20,13 @@ import com.sena.school_library.service.subjectsServices;
 
 @RestController
 @RequestMapping("api/v1/subjects")
+@CrossOrigin(
+    origins = "http://127.0.0.1:5500", 
+    methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS},
+    allowedHeaders = "*",
+    allowCredentials = "true",  // Esto es muy importante
+    maxAge = 3600
+)
 public class subjectsController {
     /*
      * Get: Obtener datos o constutar

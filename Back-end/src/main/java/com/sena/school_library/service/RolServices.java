@@ -41,7 +41,7 @@ public class RolServices {
     public Rol converRegisterRol(requestRegisterRol rol){
         return new Rol(
             0,
-            rol.getRole_type(),
+            rol.getRoletype(),
             null
         );
     }
@@ -49,7 +49,7 @@ public class RolServices {
     public void update(requestRegisterRol rolUpdate){
         var rol = findByIdRol(rolUpdate.getId_rol());
         if(rol.isPresent()){
-            rol.get().setRoleType(rolUpdate.getRole_type());
+            rol.get().setRoleType(rolUpdate.getRoletype());
             RolData.save(rol.get());
         }
     }
